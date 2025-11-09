@@ -6,11 +6,11 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 const DATA = [
     {
         title: 'Kelas A',
-        data: ['Budi', 'Caca', 'Doni', 'Ega'],
+        data: ['Mao Zedong', 'Alfredo Stroessner', 'Idi Amin', 'Francisco Franco', 'Muammar Gaddafi', 'Manuel Noriega', 'Fidel Castro'],
     },
     {
         title: 'Kelas B',
-        data: ['Fajar', 'Gita', 'Hasan', 'Indra', 'Joko'],
+        data: ['Ferdinand Marcos', 'Augusto Pinochet', 'Nicolae Ceaușescu', 'Benito Mussolini', 'Fulgencio Batista', 'Enver Hoxha'],
     },
 ];
 
