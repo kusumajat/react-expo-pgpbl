@@ -22,23 +22,18 @@ export default function LokasiScreen() {
 
 
     useEffect(() => {
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const pointsRef = ref(db, 'points/');
 
-        // Listen for data changes
         const unsubscribe = onValue(pointsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Transform the Firebase object into an array
                 const pointsArray = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
                 }));
 
-
-                // Format for SectionList
                 const formattedData = [{
                     title: 'Lokasi Tersimpan',
                     data: pointsArray
@@ -54,16 +49,12 @@ export default function LokasiScreen() {
         });
 
 
-        // Cleanup listener on component unmount
         return () => unsubscribe();
     }, []);
 
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        // Since Firebase provides real-time data, we can simulate a refresh
-        // for UX purposes. A real data refetch isn't strictly necessary unless
-        // you want to force a re-read from the server.
         setTimeout(() => {
             setRefreshing(false);
         }, 1000);

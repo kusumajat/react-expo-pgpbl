@@ -82,7 +82,6 @@ const App = () => {
                             }).then(() => {
                                 Alert.alert("Sukses", "Berhasil menyimpan data");
                                 console.log("Berhasil menyimpan data ", locationsRef.key);
-                                // clear form
                                 setName('');
                                 setLocation('');
                                 setAccuration('');
