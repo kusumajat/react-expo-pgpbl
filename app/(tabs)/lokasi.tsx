@@ -4,7 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, remove } from 'firebase/database';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Linking, RefreshControl, SectionList, StyleSheet, TouchableOpacity, View, Platform, Alert } from 'react-native';
+import { ActivityIndicator, Alert, Linking, Platform, RefreshControl, SectionList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 
 import firebaseConfig from '../../firebaseConfig.js';
@@ -142,8 +142,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     itemContainer: {
         flexDirection: 'row',
