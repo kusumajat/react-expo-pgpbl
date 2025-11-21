@@ -1,6 +1,5 @@
 // Fallback for using MaterialIcons on Android and web.
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import { ComponentProps } from 'react';
@@ -21,6 +20,9 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'add.circle.fill': 'plus',
   'mahasiswa.fill': 'mortar-board',
+  'map.fill': 'location',
+  'gmap.fill': 'globe',
+  'location.fill': 'project-roadmap',
 };
 
 /**

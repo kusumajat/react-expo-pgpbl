@@ -1,11 +1,16 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, onValue, ref, remove } from 'firebase/database';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Linking, RefreshControl, SectionList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Linking, RefreshControl, SectionList, StyleSheet, TouchableOpacity, View, Platform, Alert } from 'react-native';
+
 
 import firebaseConfig from '../../firebaseConfig.js';
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 export default function LokasiScreen() {
     const [sections, setSections] = useState<{ title: string; data: any[] }[]>([]);
@@ -20,10 +25,36 @@ export default function LokasiScreen() {
         Linking.openURL(url);
     };
 
+    const handleDelete = (id) => {
+        if (Platform.OS === 'web') {
+            if (confirm("Apakah Anda yakin ingin menghapus lokasi ini?")) {
+                const pointRef = ref(db, `points/${id}`);
+                remove(pointRef);
+            }
+        } else {
+            Alert.alert(
+                "Hapus Lokasi",
+                "Apakah Anda yakin ingin menghapus lokasi ini?",
+                [
+                    {
+                        text: "Batal",
+                        style: "cancel"
+                    },
+                    {
+                        text: "Hapus",
+                        onPress: () => {
+                            const pointRef = ref(db, `points/${id}`);
+                            remove(pointRef);
+                        },
+                        style: "destructive"
+                    }
+                ]
+            );
+        }
+    }
+
 
     useEffect(() => {
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
         const pointsRef = ref(db, 'points/');
 
         const unsubscribe = onValue(pointsRef, (snapshot) => {
@@ -77,12 +108,18 @@ export default function LokasiScreen() {
                     sections={sections}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => handlePress(item.coordinates)}>
-                            <View style={styles.item}>
-                                <ThemedText style={styles.itemName}>{item.name}</ThemedText>
-                                <ThemedText style={styles.itemCoordinates}>{item.coordinates}</ThemedText>
-                            </View>
-                        </TouchableOpacity>
+                        <View style={styles.itemContainer}>
+                            <TouchableOpacity onPress={() => handlePress(item.coordinates)} style={styles.item}>
+                                <View>
+                                    <ThemedText style={styles.itemName}>{item.name}</ThemedText>
+                                    <ThemedText style={styles.itemCoordinates}>{item.coordinates}</ThemedText>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
+                                <FontAwesome5 name="trash" size={24} color="red" />
+                            </TouchableOpacity>
+
+                        </View>
                     )}
                     renderSectionHeader={({ section: { title } }) => (
                         <ThemedText style={styles.header}>{title}</ThemedText>
@@ -108,12 +145,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    item: {
+    itemContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: '#a7dcffff',
-        padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 8,
+    },
+    item: {
+        flex: 1,
+        padding: 20,
     },
     itemName: {
         fontSize: 18,
@@ -130,4 +172,9 @@ const styles = StyleSheet.create({
         color: '#ffffffff',
         padding: 16,
     },
+    deleteButton: {
+        padding: 5,
+        marginRight: 16,
+    }
+
 });

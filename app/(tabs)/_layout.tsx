@@ -22,7 +22,7 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
-      />
+      />map
       <Tabs.Screen
         name="explore"
         options={{
@@ -35,6 +35,31 @@ export default function TabLayout() {
         options={{
           title: 'Mahasiswa',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="mahasiswa.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="lokasi"
+        options={{
+          title: 'Lokasi',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="location.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="mapwebview"
+        options={{
+          title: 'Map',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="gmap"
+        options={{
+          title: 'Gmap API',
+          tabBarIcon: ({ color }) => <IconSymbol
+            size={28}
+            name="gmap.fill"
+            color={color}
+          />,
         }}
       />
     </Tabs>
