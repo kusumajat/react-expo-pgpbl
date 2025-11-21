@@ -25,7 +25,7 @@ export default function LokasiScreen() {
         Linking.openURL(url);
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = (id: any) => {
         if (Platform.OS === 'web') {
             if (confirm("Apakah Anda yakin ingin menghapus lokasi ini?")) {
                 const pointRef = ref(db, `points/${id}`);
